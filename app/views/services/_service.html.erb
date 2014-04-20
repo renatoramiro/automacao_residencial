@@ -1,0 +1,39 @@
+<div class="col-lg-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><i class="fa fa-tachometer fa-fw"></i> <%= service.title %></h4>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="table-responsive" style="margin-bottom: 30px;">
+          	<% if service.status %>
+          	<center>
+						  <h4 class="lead text-success"><strong>Ligado</strong></h4>
+          	</center>
+            <% else %>
+            <center>
+						  <h4 class="lead text-danger"><strong>Desligado</strong></h4>
+          	</center>
+            <% end %>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.col-lg-4 (nested) -->
+      </div>
+      <!-- /.row -->
+      <% if service.status %>
+		  	<%= link_to service_turn_path(service), method: :post, remote: true, class: "btn btn-danger btn-lg btn-block" do %>
+		  		<i class="fa fa-lightbulb-o fa-fw" style="color: black;"></i> Desligar
+		  	<% end %>
+		  <% else %>
+		  	<%= link_to service_turn_path(service), method: :post, remote: true, class: "btn btn-success btn-lg btn-block" do %>
+		  		<i class="fa fa-lightbulb-o fa-fw" style="color: yellow;"></i> Ligar
+		  	<% end %>
+		  <% end %>
+    </div>
+    <!-- /.panel-body -->
+  </div>
+  <!-- /.panel -->
+</div>
