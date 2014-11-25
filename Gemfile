@@ -34,6 +34,9 @@ end
 
 gem 'private_pub'
 gem 'thin'
+gem 'foreman'
+
+gem 'serialport'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

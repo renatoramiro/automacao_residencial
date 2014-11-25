@@ -1,8 +1,9 @@
-<table id="new_services">
+<table id="new_services" class="table">
   <thead>
     <tr>
       <th>Title</th>
       <th>Code</th>
+      <th>Code Out</th>
       <th>Status</th>
       <th colspan='3'></th>
     </tr>
@@ -13,11 +14,12 @@
 	  <tr>
 		  <td><%= service.title %></td>
 		  <td><%= service.code %></td>
+		  <td><%= service.code_out %></td>
 		  <td><%= service.status %></td>
 		  <td>
-		    <%= link_to "Show", service %>
-		    <%= link_to "Edit", edit_service_path(service) %>
-		    <%= link_to "Destroy", service, method: :delete, confirm: 'Are you sure?', remote: true %>
+		    <%= link_to "Show", service, class: 'btn btn-info btn-xs' %>
+		    <%= link_to "Edit", edit_service_path(service), class: 'btn btn-default btn-xs' %>
+		    <%= link_to "Destroy", service, method: :delete, confirm: 'Are you sure?', remote: true, class: 'btn btn-danger btn-xs' %>
 		  </td>
 		</tr>
 		<% end %>

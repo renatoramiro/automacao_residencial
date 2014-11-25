@@ -1,5 +1,10 @@
 <h1>New service</h1>
 
-<%= render 'form' %>
+<%= form_for(@service, remote: true) do |f| %>
+	<%= render 'form', f: f %>
+<% end %>
 
-<%= link_to 'Back', services_path %>
+<hr>
+<p>
+	<%= link_to 'Back', services_path, class: 'btn btn-sx btn-default' %>
+</p>

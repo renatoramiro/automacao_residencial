@@ -1,0 +1,4 @@
+<% publish_to "/services/update" do %>
+	$("#services").html("<%= j render(@services) %>");
+	$("#new_services").html("<%= j render 'new_service' %>");
+<% end %>

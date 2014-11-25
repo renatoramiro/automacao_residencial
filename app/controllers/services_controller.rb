@@ -45,8 +45,9 @@ class ServicesController < ApplicationController
   def update
     respond_to do |format|
       if @service.update(service_params)
-        format.html { redirect_to @service, notice: 'Service was successfully updated.' }
+        @services = Service.all
         format.js
+        format.html { redirect_to @service, notice: 'Service was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -69,19 +70,51 @@ class ServicesController < ApplicationController
 
   def turn
     @service = Service.find(params[:service_id])
-    if @service.status
-      @service.status = false
-    else
-      @service.status = true
-    end
 
     respond_to do |format|
-      if @service.save
-        @services = Service.all
-        format.js
+      puts '###################################################'
+      puts "Servico #{@service.title}"
+      puts 'Executar comando de envio'
+      # require 'serialport'
+      port_str  = '/dev/tty.usbserial-A602YXUW'
+      # port_str  = '/dev/tty.usbmodemfd121'
+      baud_rate = 57600
+      data_bits = 8
+      stop_bits = 1
+      parity    = SerialPort::NONE
+
+      sp = SerialPort.new(port_str, baud_rate)#, data_bits, stop_bits, parity)
+      sp.write("20200")
+
+      puts '###################################################'
+      @services = Service.all
+      format.js
+    end
+  end
+
+  def executar
+    begin
+      @service = Service.where(code_out: params[:service_id]).first
+    rescue ActiveRecord::RecordNotFound
+      puts 'Deu zebra'
+    else
+      if @service.status
+        @service.status = false
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @service.errors, status: :unprocessable_entity }
+        @service.status = true
+      end
+
+      respond_to do |format|
+        if @service.save
+          puts '###################################################'
+          #system('ruby /Users/renatoramiro/Documents/teste.rb')
+          puts '###################################################'
+          @services = Service.all
+          format.js
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @service.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -94,6 +127,6 @@ class ServicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
-      params.require(:service).permit(:title, :code, :description, :status)
+      params.require(:service).permit(:title, :code, :description, :status, :code_out)
     end
 end

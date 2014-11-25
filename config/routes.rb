@@ -3,6 +3,7 @@ AutomacaoResidencial::Application.routes.draw do
 
   resources :services do
     post 'turn'
+    post 'executar'
   end
 
   namespace :api do
